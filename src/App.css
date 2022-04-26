@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  margin-top: 30px;
 }
 
 .App-logo {
@@ -27,6 +28,37 @@
 .App-link {
   color: #61dafb;
 }
+
+.list {
+
+  width: 300px;
+  margin: 0 auto;
+  max-height: 300px;
+  overflow: auto;
+  
+  border: 1px black solid;
+  position: relative;
+  padding-top: 50px;
+  
+  
+}
+.list-target {
+
+  width: 100%;
+  margin: 0 auto;
+  max-height: 500px;
+  overflow: hidden;
+  
+
+}
+.header {
+   margin: 0;
+   
+   
+  
+   
+}
+
 
 @keyframes App-logo-spin {
   from {
