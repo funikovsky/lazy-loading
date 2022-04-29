@@ -1,198 +1,84 @@
-import { useState, FC, useEffect, useRef } from 'react';
 
 
+import { FC, useMemo, useState } from 'react';
 import './App.css';
 
-const peoples = [
-  { name: 'Alex', budget: 5000, id: 1 },
-  { name: 'Alon', budget: 51000, id: 2 },
-  { name: 'John', budget: 50, id: 3 },
-  { name: 'serg', budget: 4010, id: 5 },
-  { name: 'petr', budget: 10000, id: 4 },
-  { name: 'ivan', budget: 10500, id: 6 },
-  { name: 'ilon', budget: 45000, id: 7 },
-  { name: 'hary', budget: 500, id: 8 },
-  { name: 'yacobs', budget: 200, id: 10 },
-  { name: 'Alex', budget: 5000, id: 1 },
-  { name: 'Alon', budget: 51000, id: 2 },
-  { name: 'John', budget: 50, id: 3 },
-  { name: 'serg', budget: 4010, id: 5 },
-  { name: 'petr', budget: 10000, id: 4 },
-  { name: 'ivan', budget: 10500, id: 6 },
-  { name: 'ilon', budget: 45000, id: 7 },
-  { name: 'hary', budget: 500, id: 8 },
-  { name: 'yacobs', budget: 200, id: 10 },
-  { name: 'Alex', budget: 5000, id: 1 },
-  { name: 'Alon', budget: 51000, id: 2 },
-  { name: 'John', budget: 50, id: 3 },
-  { name: 'serg', budget: 4010, id: 5 },
-  { name: 'petr', budget: 10000, id: 4 },
-  { name: 'ivan', budget: 10500, id: 6 },
-  { name: 'ilon', budget: 45000, id: 7 },
-  { name: 'hary', budget: 500, id: 8 },
-  { name: 'yacobs', budget: 200, id: 10 },
-  { name: 'Alex', budget: 5000, id: 1 },
-  { name: 'Alon', budget: 51000, id: 2 },
-  { name: 'John', budget: 50, id: 3 },
-  { name: 'serg', budget: 4010, id: 5 },
-  { name: 'petr', budget: 10000, id: 4 },
-  { name: 'ivan', budget: 10500, id: 6 },
-  { name: 'ilon', budget: 45000, id: 7 },
-  { name: 'hary', budget: 500, id: 8 },
-  { name: 'yacobs', budget: 200, id: 10 },
-  { name: 'Alex', budget: 5000, id: 1 },
-  { name: 'Alon', budget: 51000, id: 2 },
-  { name: 'John', budget: 50, id: 3 },
-  { name: 'serg', budget: 4010, id: 5 },
-  { name: 'petr', budget: 10000, id: 4 },
-  { name: 'ivan', budget: 10500, id: 6 },
-  { name: 'ilon', budget: 45000, id: 7 },
-  { name: 'hary', budget: 500, id: 8 },
-  { name: 'yacobs', budget: 200, id: 10 },
-  { name: 'Alex', budget: 5000, id: 1 },
-  { name: 'Alon', budget: 51000, id: 2 },
-  { name: 'John', budget: 50, id: 3 },
-  { name: 'serg', budget: 4010, id: 5 },
-  { name: 'petr', budget: 10000, id: 4 },
-  { name: 'ivan', budget: 10500, id: 6 },
-  { name: 'ilon', budget: 45000, id: 7 },
-  { name: 'hary', budget: 500, id: 8 },
-  { name: 'yacobs', budget: 200, id: 10 },
-  { name: 'Alex', budget: 5000, id: 1 },
-  { name: 'Alon', budget: 51000, id: 2 },
-  { name: 'John', budget: 50, id: 3 },
-  { name: 'serg', budget: 4010, id: 5 },
-  { name: 'petr', budget: 10000, id: 4 },
-  { name: 'ivan', budget: 10500, id: 6 },
-  { name: 'ilon', budget: 45000, id: 7 },
-  { name: 'hary', budget: 500, id: 8 },
-  { name: 'yacobs', budget: 200, id: 10 },
-  { name: 'Alex', budget: 5000, id: 1 },
-  { name: 'Alon', budget: 51000, id: 2 },
-  { name: 'John', budget: 50, id: 3 },
-  { name: 'serg', budget: 4010, id: 5 },
-  { name: 'petr', budget: 10000, id: 4 },
-  { name: 'ivan', budget: 10500, id: 6 },
-  { name: 'ilon', budget: 45000, id: 7 },
-  { name: 'hary', budget: 500, id: 8 },
-  { name: 'yacobs', budget: 200, id: 10 },
-  { name: 'Alex', budget: 5000, id: 1 },
-  { name: 'Alon', budget: 51000, id: 2 },
-  { name: 'John', budget: 50, id: 3 },
-  { name: 'serg', budget: 4010, id: 5 },
-  { name: 'petr', budget: 10000, id: 4 },
-  { name: 'ivan', budget: 10500, id: 6 },
-  { name: 'ilon', budget: 45000, id: 7 },
-  { name: 'hary', budget: 500, id: 8 },
-  { name: 'yacobs', budget: 200, id: 10 },
-  { name: 'Alex', budget: 5000, id: 1 },
-  { name: 'Alon', budget: 51000, id: 2 },
-  { name: 'John', budget: 50, id: 3 },
-  { name: 'serg', budget: 4010, id: 5 },
-  { name: 'petr', budget: 10000, id: 4 },
-  { name: 'ivan', budget: 10500, id: 6 },
-  { name: 'ilon', budget: 45000, id: 7 },
-  { name: 'hary', budget: 500, id: 8 },
-  { name: 'yacobs', budget: 200, id: 10 },
-  { name: 'Alex', budget: 5000, id: 1 },
-  { name: 'Alon', budget: 51000, id: 2 },
-  { name: 'John', budget: 50, id: 3 },
-  { name: 'serg', budget: 4010, id: 5 },
-  { name: 'petr', budget: 10000, id: 4 },
-  { name: 'ivan', budget: 10500, id: 6 },
-  { name: 'ilon', budget: 45000, id: 7 },
-  { name: 'hary', budget: 500, id: 8 },
-  { name: 'yacobs', budget: 200, id: 10 },
-  { name: 'Alex', budget: 5000, id: 1 },
-  { name: 'Alon', budget: 51000, id: 2 },
-  { name: 'John', budget: 50, id: 3 },
-  { name: 'serg', budget: 4010, id: 5 },
-  { name: 'petr', budget: 10000, id: 4 },
-  { name: 'ivan', budget: 10500, id: 6 },
-  { name: 'ilon', budget: 45000, id: 7 },
-  { name: 'hary', budget: 500, id: 8 },
-  { name: 'yacobs', budget: 200, id: 10 },
-
-]
-
-function useIntersectionObserver<T extends HTMLElement>() {
-
-  const ref = useRef<HTMLDivElement>(null)
-
-  const [isVisible, setVisible] = useState<boolean>(false)
-
-  const callbackFunction = (entries: IntersectionObserverEntry[]) => {
-    const [entry] = entries;
-
-    setVisible(entry.isIntersecting)
-
-    
-    
-
-  }
-
-  const options = {
-    root: document.querySelector('.header'),
-    rootMargin: "0px",
-    threshold: 0.7
-  }
-
-  useEffect(() => {
-
-    const observer = new IntersectionObserver(callbackFunction, options)
-
-    if (ref.current) {
-      observer.observe(ref.current)
-    }
-  }, [])
 
 
-  return {
-    ref,
-    isVisible
-  }
+interface IUser {
+
+  address: IAddress,
+  id: number,
+  name: string,
+  username: string,
+  email: string
+
+}
+
+interface IAddress {
+  city: string,
+  geo: IGeo,
+  street: string,
+  suite: string,
+  zipcode: string,
+  
+
+
+}
+
+interface IGeo {
+  lat: string,
+  lng: string
 }
 
 
 const App: FC = () => {
 
-  const { ref, isVisible } = useIntersectionObserver<HTMLDivElement>()
+  const [user, setUser] = useState<IUser>(Object)
 
-  useEffect(() => {
+  const request = useMemo(async () => {
+    const response = await fetch('https://jsonplaceholder.typicode.com/users/1')
+    const data = await response.json()
 
-    console.log(isVisible ? 'элемент в зоне видимости' : 'не виден')
+    console.log(data)
+
+    const { address: {city, geo: {lat, lng}, street, suite, zipcode}, id, name, username, email } = data;
+
+    const userData: IUser = {
 
 
+      address: {
 
-  }, [isVisible])
+        city,
+        geo: {
+          lat,
+          lng
+        },
+        street,
+        suite,
+        zipcode,
+        
+
+      },
+      id,
+      name,
+      username,
+      email,
+    }
+
+    setUser(prev => userData)
+
+
+  }, [])
+
 
   return (
-    <div className="App">
+    <div className="App"> Пользователь N-{user.id}:
 
-
-<div className="header">LIST</div>
-
-      <div className='list'>
-        
-        
-        <div ref={ref} className='list-target'>
-
-          {peoples.map(item => (
-            <p >
-              {item.id}: {item.name} --- {item.budget}
-            </p>
-          ))}
-
-
-        </div>
-
-
-
-
-      </div>
-
-
-
+      <p>ИМЯ -- {user.name},  </p>
+      <p>НИК --- {user.username},</p>
+      <p>E-Mail: {user.email}</p>
+      <p>Адрес: {user.address.city}</p>
 
 
 
